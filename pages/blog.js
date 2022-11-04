@@ -14,3 +14,13 @@ function Blog() {
 }
 
 export default Blog;
+
+export async function getStaticProps() {
+  const response = await fetch(`${process.env.API_URL}/blog?populate=image`);
+  const { data: blog } = await response.json();
+  console.log(guitars);
+
+  return {
+    props: { guitars },
+  };
+}

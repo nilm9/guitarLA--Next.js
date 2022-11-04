@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinifyMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    domains: [`res.cloudinary.com`],
   },
 };
 

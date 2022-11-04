@@ -1,25 +1,33 @@
 import React from "react";
-import Link from "next/link";
 import Layout from "../components/layout";
-
-export async function getStaticProps() {
-  const response = await fetch(
-    "http://127.0.0.1:1337/api/guitars?populate=image"
-  );
-  const res = await response.json();
-  console.log(res);
-
-  return {
-    props: {},
-  };
-}
+import Guitar from "../components/guitar";
+import styles from "../styles/grid.module.css";
 
 function Shop({ guitars }) {
+  console.log(guitars.image);
+
   return (
     <Layout title="Shop" description="Shop">
-      <Link href="/">Go to Home</Link>
+      <main className="container">
+        <h1 className="heading"> Our colection</h1>
+        <div className={styles.grid}>
+          {guitars.map((guitar) => (
+            <Guitar guitar={guitar.attributes} key={guitar.id} />
+          ))}
+        </div>
+      </main>
     </Layout>
   );
 }
 
 export default Shop;
+
+export async function getStaticProps() {
+  const response = await fetch(`${process.env.API_URL}/guitars?populate=image`);
+  const { data: guitars } = await response.json();
+  console.log(guitars);
+
+  return {
+    props: { guitars },
+  };
+}
